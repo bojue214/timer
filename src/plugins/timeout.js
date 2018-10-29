@@ -6,13 +6,13 @@ const config = {
     times: 1,
     // excuted time
     score: 0,
-    // key
+    // *key
     key: null,
     // interval time
     interval: 3000,
     // is running
     running: false,
-    // will be excuted
+    // *will be excuted
     callback: null,
     // the behavior's source target
     context: null,
@@ -118,7 +118,7 @@ const timeout = function(options){
         opts.excution = function(){
             opts.running = true;
             opts.timeout = window.setTimeout(function(){
-                callback.call(opts.context ? opts.context : null, opts.params);
+                callback.call((opts.context ? opts.context : opts), opts.params);
                 opts.score++;
                 if(opts.times < 0 || opts.times > opts.score){
                     opts.excution();
