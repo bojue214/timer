@@ -109,7 +109,7 @@ Object.defineProperties(Queue, {
  * @param {object} options  custom timeout options
  */
 const timeout = function(options){
-    if(!options.key){ return new Errow('timeout need an unique key!');}
+    if(!options.key){ return new Errow('timeout need an unique key.');}
     
     let opts = Queue.add(options);
 
@@ -180,6 +180,18 @@ timeout.get = function(key){
  */
 timeout.size = function(){
     return Queue.length;
+};
+
+/** isRunning
+ * return timeout running status
+ * @param {string} key  timeout key
+ */
+timeout.isRunning = function(key){
+    if(Queue[key]){
+        return Queue[key].running;
+    } else{
+        return new Error('not exist timeout.');l
+    }
 };
 
 export default {
