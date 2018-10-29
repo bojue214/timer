@@ -7,21 +7,21 @@
     </el-row>
     <el-row>
       <el-col :xs="24" :sm="{span:14, offset:5}" :md="{span:8, offset:8}" :lg="{span:6, offset:9}" :xl="{span:6, offset:9}">
-        <el-form :model="loginModel" status-icon :rules="rules" ref="loginForm" label-width="100px">
+        <el-form :model="user" status-icon :rules="rules" ref="loginForm" label-width="100px">
           
           <el-form-item prop="account">
-            <el-input v-model="loginModel.account" :placeholder="$t('account')">
+            <el-input v-model="user.account" :placeholder="$t('account')">
               <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('account', 'loginForm')"></i>
             </el-input>
           </el-form-item>
           <el-form-item prop="password" v-if='!showPass'>
-            <el-input type="password" v-model="loginModel.password" autocomplete="off" :placeholder="$t('password')">
+            <el-input type="password" v-model="user.password" autocomplete="off" :placeholder="$t('password')">
               <i slot="suffix" class="el-input__icon el-icon-view" v-on:click.stop="toggle"></i>
               <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('password', 'loginForm')"></i>
             </el-input>
           </el-form-item>
           <el-form-item prop="password" v-if='showPass'>
-            <el-input v-model="loginModel.password" autocomplete="off"  :placeholder="$t('password')">
+            <el-input v-model="user.password" autocomplete="off"  :placeholder="$t('password')">
               <i slot="suffix" class="el-input__icon el-icon-more" v-on:click.stop="toggle"></i>
               <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('password', 'loginForm')"></i>
             </el-input>
@@ -42,7 +42,7 @@ export default {
   components:{ language },
   data() {
     return {
-      loginModel: {
+      user: {
         account: '',
         password:''
       },
@@ -59,7 +59,7 @@ export default {
     },
 
     clear(key, formName){
-      this.loginModel[key] = '';
+      this.user[key] = '';
       this.$refs[formName].clearValidate([key]);
     },
 
@@ -67,12 +67,11 @@ export default {
       let self = this;
       self.$refs[formName].validate((valid) => {
         if(valid){
-          self.$store.dispatch('ACTION_USER', {
-            account: self.loginModel.account, 
-            password: self.loginModel.password
+          self.$store.dispatch('ACTION_USER', self.user).then(function(){
+            self.$router('home');
+          },function(){
+            
           });
-        } else{
-
         }
       });
     }
