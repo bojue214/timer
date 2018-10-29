@@ -3,7 +3,7 @@
  */
 const config = {
     // excute time, -1 is infinite loop
-    times: 1,
+    time: 1,
     // excuted time
     score: 0,
     // *key
@@ -113,21 +113,22 @@ const timeout = function(options){
     
     let opts = Queue.add(options);
 
-    if(opts.immediately && !opts.running && opts.times !== 0){
-        
-        opts.excution = function(){
-            opts.running = true;
-            opts.timeout = window.setTimeout(function(){
-                callback.call((opts.context ? opts.context : opts), opts.params);
-                opts.score++;
-                if(opts.times < 0 || opts.times > opts.score){
-                    opts.excution();
-                } else{
-                    opts.running = false;
-                    !opts.keep && timeout.remove(opts.key);
-                }
-            },opts.interval);
-        }
+    opts.excution = function(){
+        opts.running = true;
+        opts.timeout = window.setTimeout(function(){
+            opts.callback.call((opts.context ? opts.context : opts), opts.params);
+            opts.score++;
+            if(opts.time < 0 || opts.time > opts.score){
+                opts.excution();
+            } else{
+                opts.running = false;
+                !opts.keep && Queue.remove(opts.key);
+            }
+        },opts.interval);
+    }
+
+    if(opts.immediately && !opts.running && opts.time !== 0){
+        opts.excution();
     }
 };
 
@@ -136,7 +137,7 @@ const timeout = function(options){
  * @param {object} options  custom timeout options
  */
 timeout.one = function(options){
-    options.times = 1;
+    options.time = 1;
     return timeout(options);
 };
 

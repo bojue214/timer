@@ -53,15 +53,6 @@ export default {
       showPass: false
     };
   },
-  mounted(){
-    this.$timeout({
-      time:3,
-      key:'11111',
-      callback: function(params){
-        console.log(this.key, params);
-      }
-    });
-  },
   methods: {
     toggle(){
       this.showPass = !this.showPass;
