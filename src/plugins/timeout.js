@@ -167,6 +167,14 @@ timeout.off = function(key){
     }
 };
 
+/** get
+ * get a timeout options by an unique key
+ * @param {string} key  timeout key
+ */
+timeout.get = function(key){
+    return Queue.get(key);
+};
+
 /** size
  * return timeout queue length
  */
