@@ -174,7 +174,7 @@ timeout.size = function(){
 };
 
 export default {
-    install(Vue, options){
+    install (Vue, options){
         Vue.prototype.$timeout = timeout;
     }
 };
