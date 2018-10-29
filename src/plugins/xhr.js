@@ -98,7 +98,7 @@ const xhr = function (options) {
 };
 
 export default {
-    install (Vue, options){
+    install (Vue){
         Vue.prototype.$xhr = xhr;
     }
 };

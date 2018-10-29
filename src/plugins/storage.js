@@ -65,7 +65,7 @@ const storage = {
 };
 
 export default { 
-    install (Vue, options) {
+    install (Vue) {
         Vue.prototype.$storage = storage;
     }
 };

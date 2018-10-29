@@ -36,7 +36,7 @@ const validator = function(ruleKey, messageKey){
 };
 
 export default { 
-    install (Vue, options) {
+    install (Vue) {
         Vue.prototype.$vali = validator;
     }
 };
