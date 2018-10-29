@@ -1,28 +1,42 @@
-const defaultOpts = {
+/** DEFAULT_OPTIONS
+ * default options
+ */
+const DEFAULT_OPTIONS = {
     method: 'POST',
     url: '',
-    headers: {},
     token: true,
     timeout: 6000,
     data: null
 };
 
-let xhr = function (options) {
-    let opts = Object.assign({}, defaultOpts, options),
+/** DEFAULT_HEADERS
+ * default headers
+ */
+const DEFAULT_HEADERS = {
+
+};
+
+/** xhr
+ * ajax proxy
+ * @param {object} options  request config options
+ */
+const xhr = function (options) {
+    let opts = Object.assign({}, DEFAULT_OPTIONS, options),
         params,
         xhr,
         promise;
-        opts.url = opts.url.replace(/\r|\n|\\s/g,'');
+        opts.url = opts.url.replace(/\r|\n|\\s/g, '');
 
         promise = new Promise(function(resolve, reject) {
             xhr = new XMLHttpRequest();
+
             xhr.open(opts.method, opts.url, true);
 
-            xhr.onload = function(response) {
+            xhr.onload = function( response ) {
                 let data = xhr.response;
                 let status = xhr.status;
                 try {
-                    data = JSON.parse(data);
+                    data = JSON.parse( data );
                 } catch(e) {
                     console.log( opts.url, "response can't be parsed to JSON format." );
                 }
@@ -41,18 +55,24 @@ let xhr = function (options) {
 
             xhr.timeout = function() {};
 
-            if(opts.token === true) {
-                
-            } else {
-                delete opts.headers['TIMER-TOKEN'];
+            for(let key in DEFAULT_HEADERS ){
+                xhr.setRequestHeader(key, DEFAULT_HEADERS[key]);
+                opts.headers[key] = DEFAULT_HEADERS[key];
             }
 
+            for(let key in options.headers) {
+                xhr.setRequestHeader(key, options.headers[key]);
+                opts.headers[key] = options.headers[key];
+            }
+            
             if(!opts.headers['Content-Type']) {
                 opts.headers['Content-Type'] = 'application/json';
             }
 
-            for(let key in opts.headers) {
-                xhr.setRequestHeader(key, opts.headers[key]);
+            if(opts.token === true) {
+                
+            } else {
+                delete opts.headers['TIMER-TOKEN'];
             }
 
             try {
@@ -74,6 +94,6 @@ let xhr = function (options) {
 
 export default {
     install: function(Vue, options){
-        Vue.prototype.$http = xhr;
+        Vue.prototype.$xhr = xhr;
     }
 };
