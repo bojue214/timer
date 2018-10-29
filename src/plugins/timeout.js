@@ -16,7 +16,7 @@ const config = {
     callback: null,
     // the behavior's source target
     context: null,
-    //excuted parameters
+    // excuted parameters
     params: null,
     // timeout function
     timeout: null,
