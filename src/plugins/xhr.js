@@ -1,7 +1,7 @@
-/** DEFAULT_OPTIONS
+/** config
  * default options
  */
-const DEFAULT_OPTIONS = {
+const config = {
     method: 'POST',
     url: '',
     token: true,
@@ -10,10 +10,10 @@ const DEFAULT_OPTIONS = {
     base: window.location.origin + '/api'
 };
 
-/** DEFAULT_HEADERS
+/** setting
  * default headers
  */
-const DEFAULT_HEADERS = {
+const header = {
 
 };
 
@@ -22,7 +22,7 @@ const DEFAULT_HEADERS = {
  * @param {object} options  request config options
  */
 const xhr = function (options) {
-    let opts = Object.assign({}, DEFAULT_OPTIONS, options),
+    let opts = Object.assign({}, config, options),
         params,
         xhr,
         promise;
@@ -62,12 +62,12 @@ const xhr = function (options) {
 
             for(let key in DEFAULT_HEADERS ){
                 xhr.setRequestHeader(key, DEFAULT_HEADERS[key]);
-                opts.headers[key] = DEFAULT_HEADERS[key];
+                opts.headers[key] = header[key];
             }
 
             for(let key in options.headers) {
                 xhr.setRequestHeader(key, options.headers[key]);
-                opts.headers[key] = options.headers[key];
+                opts.headers[key] = options.header[key];
             }
             
             if(!opts.headers['Content-Type']) {
