@@ -6,7 +6,8 @@ const DEFAULT_OPTIONS = {
     url: '',
     token: true,
     timeout: 6000,
-    data: null
+    data: null,
+    base: window.location.origin + '/api'
 };
 
 /** DEFAULT_HEADERS
@@ -25,11 +26,15 @@ const xhr = function (options) {
         params,
         xhr,
         promise;
+
+        if(opts.api){
+            opts.url = opts.base + opts.api;
+        }
+
         opts.url = opts.url.replace(/\r|\n|\\s/g, '');
 
         promise = new Promise(function(resolve, reject) {
             xhr = new XMLHttpRequest();
-
             xhr.open(opts.method, opts.url, true);
 
             xhr.onload = function( response ) {

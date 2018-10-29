@@ -5,6 +5,8 @@ const MAP = {
     
     user:{
         SET_USER:               'SET_USER',
+        ACTION_USER:            'ACTION_USER',
+        
         SET_USER_NAME:          'SET_USER_NAME',
         SET_USER_SEX:           'SET_USER_SEX',
         SET_USER_BIRTHDAY:      'SET_USER_BIRTHDAY',

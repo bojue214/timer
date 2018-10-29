@@ -1,5 +1,6 @@
 import map from '../map';
 import i18n from '../../i18n/i18n';
+import xhr from '../../plugins/xhr';
 
 const user = {
     state:{
@@ -54,6 +55,26 @@ const user = {
         [map['user']['ACTION_USER_LANGUAGE']](context, language){
             context.commit('SET_USER_LANGUAGE', language);
         },
+        
+        /** ACTION_USER
+         * get target user's infomations and set its information into vuex store
+         * @param {store} context 
+         * @param {object} user 
+         */
+        async [map['user']['ACTION_USER']](context, user){
+            let res = await xhr({
+                api: '/user',
+                data: {
+                    account: user.account,
+                    password: user.password
+                },
+                token: false
+            });
+
+            if(res && res.data && res.data){
+                context.commit('SET_USER', res.data.data);
+            }
+        },
     },
 
     getters:{
@@ -61,8 +82,8 @@ const user = {
             return function(){
                 return state.language;
             }
-        }
-    },
+        },
+    }
 };
 
 export default user;

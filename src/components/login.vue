@@ -39,9 +39,7 @@
 import language from './language.vue'
 
 export default {
-  components:{
-    language
-  },
+  components:{ language },
   data() {
     return {
       loginModel: {

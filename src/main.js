@@ -24,7 +24,7 @@ Vue.use(storage);
 Vue.use(xhr);
 
 /* eslint-disable no-new */
-const app = new Vue({
+new Vue({
   el: '#app',
   i18n,
   store,
