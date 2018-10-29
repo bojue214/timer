@@ -194,8 +194,11 @@ timeout.isRunning = function(key){
     }
 };
 
-export default {
-    install (Vue){
-        Vue.prototype.$timeout = timeout;
-    }
+/** install
+ *  vue install function
+ * @param {object} Vue  Vue
+ */
+timeout.install = function(Vue){
+    Vue.prototype.$timeout = timeout;
 };
+export default timeout;

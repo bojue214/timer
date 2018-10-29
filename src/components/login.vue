@@ -64,9 +64,13 @@ export default {
     },
 
     login( formName ){
-      this.$refs[formName].validate((valid) => {
+      let self = this;
+      self.$refs[formName].validate((valid) => {
         if(valid){
-
+          self.$store.dispatch('ACTION_USER', {
+            account: self.loginModel.account, 
+            password: self.loginModel.password
+          });
         } else{
 
         }

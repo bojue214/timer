@@ -35,8 +35,12 @@ const validator = function(ruleKey, messageKey){
     };
 };
 
-export default { 
-    install (Vue) {
-        Vue.prototype.$vali = validator;
-    }
+/** install
+ *  vue install function
+ * @param {object} Vue  Vue
+ */
+validator.install = function(Vue){
+    Vue.prototype.$vali = validator;
 };
+
+export default validator;

@@ -64,8 +64,12 @@ const storage = {
     },
 };
 
-export default { 
-    install (Vue) {
-        Vue.prototype.$storage = storage;
-    }
+/** install
+ *  vue install function
+ * @param {object} Vue  Vue
+ */
+storage.install = function(Vue){
+    Vue.prototype.$storage = storage;
 };
+
+export default storage;

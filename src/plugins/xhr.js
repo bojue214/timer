@@ -7,15 +7,14 @@ const config = {
     token: true,
     timeout: 6000,
     data: null,
-    base: window.location.origin + '/api'
+    base: window.location.origin + '/api',
+    header:{}
 };
 
 /** setting
- * default headers
+ * default header
  */
-const header = {
-
-};
+const header = {};
 
 /** xhr
  * ajax proxy
@@ -40,16 +39,17 @@ const xhr = function (options) {
             xhr.onload = function( response ) {
                 let data = xhr.response;
                 let status = xhr.status;
-                try {
-                    data = JSON.parse( data );
-                } catch(e) {
-                    console.log( opts.url, "response can't be parsed to JSON format." );
-                }
-                
+
                 if(status >= 200 && status < 400) {
+                    try {
+                        data = JSON.parse( data );
+                    } catch(e) {
+                        console.log( opts.url, "response can't be parsed to JSON format." );
+                    }
                     resolve({data, response, xhr});
                     return;
                 } else {
+                    reject(response);
                     console.error(status, opts.url, data, response);
                 }
             };
@@ -60,24 +60,20 @@ const xhr = function (options) {
 
             xhr.timeout = function() {};
 
-            for(let key in DEFAULT_HEADERS ){
-                xhr.setRequestHeader(key, DEFAULT_HEADERS[key]);
-                opts.headers[key] = header[key];
-            }
+            for(let key in header ){ opts.header[key] = header[key]; }
 
-            for(let key in options.headers) {
-                xhr.setRequestHeader(key, options.headers[key]);
-                opts.headers[key] = options.header[key];
-            }
+            for(let key in options.header) { opts.header[key] = options.header[key]; }
             
-            if(!opts.headers['Content-Type']) {
-                opts.headers['Content-Type'] = 'application/json';
-            }
+            if(!opts.header['Content-Type']) { opts.header['Content-Type'] = 'application/json'; }
 
             if(opts.token === true) {
                 
             } else {
-                delete opts.headers['TIMER-TOKEN'];
+                delete opts.header['TIMER-TOKEN'];
+            }
+
+            for(let key in opts.header) {
+                xhr.setRequestHeader(key, opts.header[key]);
             }
 
             try {
@@ -97,8 +93,12 @@ const xhr = function (options) {
         return promise;
 };
 
-export default {
-    install (Vue){
-        Vue.prototype.$xhr = xhr;
-    }
+/** install
+ *  vue install function
+ * @param {object} Vue  Vue
+ */
+xhr.install = function(Vue){
+    Vue.prototype.$xhr = xhr;
 };
+
+export default xhr;
