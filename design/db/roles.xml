@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<table name="roles">
+    <th type="auto_add" description="编号">id</th>
+    <th type="string" description="角色" postscript="角色的名称">name</th>
+    <th type="string" description="职务" postscript="角色对应的职务，也可以称为角色的昵称">position</th>
+    <th type="string" description="权限" postscript="权限模块的连接字符串，以'|'分隔">roles</th>
+</table>

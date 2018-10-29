@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<table name="users">
+    <th type="auto_add" description="编号">id</th>
+    <th type="string" description="账号">account</th>
+    <th type="string" description="密码">password</th>
+    <th type="string" description="救援码">help_number</th>
+    <th type="string" description="姓名">name</th>
+    <th type="string" description="语言偏好">language</th>
+    <th type="string" description="昵称">nick_name</th>
+    <th type="string" description="头像" postscript="base64图片字符串">avatar</th>
+    <th type="string" description="照片" postscript="url">photo</th>
+    <th type="string" description="生日" postscript="时间戳">birthday</th>
+    <th type="string" description="性别">sex</th>
+    <th type="string" description="角色" postscript="多个角色id的连接字符串，用|分隔">roles</th>    
+    <th type="string" description="邮箱">email</th>
+    <th type="string" description="微信">weixin</th>
+    <th type="string" description="qq">qq</th>
+    <th type="string" description="微博">weibo</th>
+    <th type="string" description="身份证">id_card</th>
+    <th type="string" description="国籍">country</th>
+    <th type="string" description="籍贯">native_place</th>
+    <th type="string" description="住址">address</th>
+    <th type="string" description="手机号码">phone_number</th>
+    <th type="string" description="座机号码">telphone_number</th>
+    <th type="string" description="紧急联系人">emergency_contact_person</th>
+    <th type="string" description="紧急联系人关系">emergency_contact_relation</th>
+    <th type="string" description="紧急联系人手机号码">emergency_contact_phone_number</th>
+    <th type="string" description="紧急联系人座机号码">emergency_contact_telphone_number</th>
+    <th type="boolean" description="是否已确认联系人">has_emergency_comfirm</th>
+    <th type="string" description="上次确认时间" postscript="多个时间戳连接的字符串，用'|'分隔开">emergency_comfirm_time</th>
+    <th type="string" description="入职时间" postscript="时间戳">hiredate</th>
+    <th type="string" description="转正时间" postscript="时间戳">regulardate</th>
+    <th type="string" description="合同起始" postscript="时间戳">contract_start_time</th>
+    <th type="string" description="合同结束" postscript="时间戳">contract_end_time</th>
+    <th type="string" description="合同编号">contract_number</th>
+    <th type="string" description="上次登录时间" postscript="多个时间戳连接的字符串，用'|'分隔开">last_login_time</th>
+    <th type="string" description="上次登录ip" postscript="多个登录ip连接的字符串，用'|'分隔开">last_login_ip</th>
+    <th type="string" description="创建时间" postscript="时间戳">create_time</th>
+    <th type="string" description="更新时间" postscript="时间戳">update_time</th>
+</table>
