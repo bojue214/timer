@@ -148,7 +148,7 @@ timeout.one = function(options){
  */
 timeout.on = function(options){
     if(typeof options === 'string'){
-        options = Queue.get(key);
+        options = Queue.get(options);
     }
     options.immediately = true;
     options.running = false;

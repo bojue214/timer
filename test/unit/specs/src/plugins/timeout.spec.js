@@ -31,7 +31,7 @@ test('timeout.on', done => {
         interval:50,
         callback: callback,
         immediately:false,
-        keep: true,
+        keep: false,
         time: 1,
         context: {a:1},
         params: "i'm params."
@@ -40,6 +40,25 @@ test('timeout.on', done => {
     timeout.on(timeout.get('unit-timeout-on'));
 });
 
+test('timeout.on.1', done => {
+    let callback = function(){
+        expect(this.a).toBe(1);
+        done();
+    };
+
+    timeout({
+        key:'unit-timeout-on-1',
+        interval:50,
+        callback: callback,
+        immediately:false,
+        keep: false,
+        time: 1,
+        context: {a:1},
+        params: "i'm params."
+    });
+
+    timeout.on('unit-timeout-on-1');
+});
 
 test('timeout.one', done => {
     let callback = function(){
@@ -114,6 +133,7 @@ test('timeout.isRunning', () => {
     expect(timeout.isRunning('unit-timeout-isRunning')).toBe(true);
     timeout.off('unit-timeout-isRunning');
     expect(timeout.isRunning('unit-timeout-isRunning')).toBe(false);
+    expect(timeout.isRunning('aaaaaa') instanceof Error).toBe(true);
 });
 
 test('timeout.install', () => {
