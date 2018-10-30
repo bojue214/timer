@@ -1,3 +1,4 @@
+const g = typeof window == "undefined" ? global : window;
 /** config
  * default timeout config options
  */
@@ -115,7 +116,7 @@ const timeout = function(options){
 
     opts.excution = function(){
         opts.running = true;
-        opts.timeout = window.setTimeout(function(){
+        opts.timeout = g.setTimeout(function(){
             opts.callback.call((opts.context ? opts.context : opts), opts.params);
             opts.score++;
             if(opts.time < 0 || opts.time > opts.score){
@@ -150,6 +151,7 @@ timeout.on = function(options){
         options = Queue.get(key);
     }
     options.immediately = true;
+    options.running = false;
     return timeout(options);
 };
 
@@ -159,7 +161,7 @@ timeout.on = function(options){
  */
 timeout.off = function(key){
     if(Queue[key]){
-        window.clearTimeout(Queue[key].timeout);
+        g.clearTimeout(Queue[key].timeout);
         Queue[key].running = false;
         if(!Queue[key].keep){
             Queue.remove(key);
