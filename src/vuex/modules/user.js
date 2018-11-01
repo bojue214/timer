@@ -1,6 +1,6 @@
 import map from '../map';
 import i18n from '../../i18n/i18n';
-import xhr from '../../plugins/xhr';
+import http from '../../plugins/http';
 
 const user = {
     state:{
@@ -62,8 +62,8 @@ const user = {
          * @param {object} user 
          */
         async [map['user']['ACTION_USER']](context, user){
-            let res = await xhr({
-                api: '/user',
+            let res = await http({
+                api: '/user/login',
                 data: {
                     account: user.account,
                     password: user.password

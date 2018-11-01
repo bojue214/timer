@@ -7,7 +7,7 @@ const config = {
     token: true,
     timeout: 6000,
     data: null,
-    base: window.location.origin + '/api',
+    base: '127.0.0.1:9999/api',
     header:{}
 };
 
@@ -16,14 +16,14 @@ const config = {
  */
 const header = {};
 
-/** xhr
+/** http
  * ajax proxy
  * @param {object} options  request config options
  */
-const xhr = function (options) {
+const http = function (options) {
     let opts = Object.assign({}, config, options),
         params,
-        xhr,
+        xhr = new XMLHttpRequest(),
         promise;
 
         if(opts.api){
@@ -33,7 +33,7 @@ const xhr = function (options) {
         opts.url = opts.url.replace(/\r|\n|\\s/g, '');
 
         promise = new Promise(function(resolve, reject) {
-            xhr = new XMLHttpRequest();
+            console.log(11111);
             xhr.open(opts.method, opts.url, true);
 
             xhr.onload = function( response ) {
@@ -97,8 +97,8 @@ const xhr = function (options) {
  *  vue install function
  * @param {object} Vue  Vue
  */
-xhr.install = function(Vue){
-    Vue.prototype.$xhr = xhr;
+http.install = function(Vue){
+    Vue.prototype.$http = http;
 };
 
-export default xhr;
+export default http;
