@@ -7,7 +7,8 @@ const config = {
     token: true,
     timeout: 6000,
     data: null,
-    base: '127.0.0.1:9999/api',
+    protocol: 'http://',
+    base: '127.0.0.1:8080/api',
     header:{}
 };
 
@@ -21,21 +22,17 @@ const header = {};
  * @param {object} options  request config options
  */
 const http = function (options) {
-    let opts = Object.assign({}, config, options),
-        params,
-        xhr = new XMLHttpRequest(),
-        promise;
+    let opts = Object.assign({}, config, options);
+    let params,
+        xhr;
 
         if(opts.api){
-            opts.url = opts.base + opts.api;
+            opts.url =opts.protocol + opts.base + opts.api;
         }
-
         opts.url = opts.url.replace(/\r|\n|\\s/g, '');
-
-        promise = new Promise(function(resolve, reject) {
-            console.log(11111);
-            xhr.open(opts.method, opts.url, true);
-
+        
+    let promise = new Promise(function(resolve, reject) {
+            xhr = new XMLHttpRequest();
             xhr.onload = function( response ) {
                 let data = xhr.response;
                 let status = xhr.status;
@@ -60,9 +57,11 @@ const http = function (options) {
 
             xhr.timeout = function() {};
 
+            xhr.open(opts.method, opts.url, true);
+
             for(let key in header ){ opts.header[key] = header[key]; }
 
-            for(let key in options.header) { opts.header[key] = options.header[key]; }
+            for(let k in options.header) { opts.header[k] = options.header[k]; }
             
             if(!opts.header['Content-Type']) { opts.header['Content-Type'] = 'application/json'; }
 
@@ -72,8 +71,8 @@ const http = function (options) {
                 delete opts.header['TIMER-TOKEN'];
             }
 
-            for(let key in opts.header) {
-                xhr.setRequestHeader(key, opts.header[key]);
+            for(let v in opts.header) {
+                xhr.setRequestHeader(v, opts.header[v]);
             }
 
             try {
@@ -82,7 +81,7 @@ const http = function (options) {
                 params = opts.data;
             }
 
-            if(options.data) {
+            if(opts.data) {
                 xhr.send(params)
             } else {
                 xhr.send();

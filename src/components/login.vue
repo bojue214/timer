@@ -1,13 +1,13 @@
 <template>
   <div>
     <el-row>
-      <el-col :xs="24" :sm="{span:14, offset:5}" :md="{span:8, offset:8}" :lg="{span:6, offset:9}" :xl="{span:6, offset:9}">
+      <el-col :xs="{span:20, offset:2}" :sm="{span:14, offset:5}" :md="{span:8, offset:8}" :lg="{span:6, offset:9}" :xl="{span:6, offset:9}">
         <language></language>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :xs="24" :sm="{span:14, offset:5}" :md="{span:8, offset:8}" :lg="{span:6, offset:9}" :xl="{span:6, offset:9}">
-        <el-form :model="user" status-icon :rules="rules" ref="loginForm" label-width="100px">
+      <el-col :xs="{span:20, offset:2}" :sm="{span:14, offset:5}" :md="{span:8, offset:8}" :lg="{span:6, offset:9}" :xl="{span:6, offset:9}">
+        <el-form :model="user" status-icon :rules="rules" ref="loginForm">
           
           <el-form-item prop="account">
             <el-input v-model="user.account" :placeholder="$t('account')">
@@ -53,10 +53,17 @@ export default {
       showPass: false
     };
   },
+  mounted(){
+    // register a listener to get the user mutation info.
+    //this.$store.subscribe(this.logged);
+  },
   methods: {
-    toggle(){
-      this.showPass = !this.showPass;
+    // when SET_USER is excued, the user info is got successfully.
+    logged(mutation, state){
+      mutation.type === 'SET_USER' && this.$router.push('home');
     },
+
+    toggle(){ this.showPass = !this.showPass; },
 
     clear(key, formName){
       this.user[key] = '';
@@ -66,13 +73,17 @@ export default {
     login( formName ){
       let self = this;
       self.$refs[formName].validate((valid) => {
-        if(valid){
-          self.$store.dispatch('ACTION_USER', self.user).then(function(){
-            self.$router('home');
-          },function(){
-            
+        valid && self.$store.dispatch('ACTION_USER_LOGIN', self.user).then(function(res){
+          self.$notify.success({
+            title: '登录成功',
+            message: '页面跳转中......'
           });
-        }
+        }).catch(function(error){
+          self.$notify.error({
+            title: '登录失败',
+            message: '请重试'
+          });
+        });
       });
     }
   }

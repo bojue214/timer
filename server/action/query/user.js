@@ -10,10 +10,7 @@ module.exports ={
     },
 
     byAccountAndPassword: function(user){
-        user = user || {};
-        user.account = "11";
-        user.account = "22";
-        if(user.account && user.password){
+        if(user.account === '1' && user.password ==='2'){
             return {
                 account: user.account,
                 password: user.password,
@@ -21,6 +18,8 @@ module.exports ={
                 nick:'bbb',
                 birthday:'910714'
             };
+        } else{
+            return {}
         }
     }
 };
