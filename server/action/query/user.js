@@ -1,11 +1,12 @@
 module.exports ={
-    id: function(id){
+    
+    byId: function(id){
         return {
 
         }
     },
 
-    account: function(account){
+    byAccount: function(account){
 
     },
 

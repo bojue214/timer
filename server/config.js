@@ -5,6 +5,9 @@ const config = {
     db:{
         mysql:{}
     },
+    token:{
+        expire: 1 * 60 * 1000
+    }
 };
 
 module.exports = config;

@@ -27,7 +27,7 @@
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click="login('loginForm')">{{$t('Login')}}</el-button>
+            <el-button type="success" @click="login('loginForm')" v-loading.fullscreen.lock="isLoginning">{{$t('Login')}}</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -50,7 +50,8 @@ export default {
         account: [{ required: true, validator: this.$vali('notEmpty', '$vali.noAccount'), trigger: 'blur' }],
         password: [{ required: true, validator: this.$vali('notEmpty', '$vali.noPassword'), trigger: 'blur' }]
       },
-      showPass: false
+      showPass: false,
+      isLoginning: false
     };
   },
   mounted(){
@@ -72,17 +73,14 @@ export default {
 
     login( formName ){
       let self = this;
+      this.isLoginning = true;
       self.$refs[formName].validate((valid) => {
         valid && self.$store.dispatch('ACTION_USER_LOGIN', self.user).then(function(res){
-          self.$notify.success({
-            title: '登录成功',
-            message: '页面跳转中......'
-          });
+          self.$notify.success({ title: '登录成功', message: '页面跳转中......' });
         }).catch(function(error){
-          self.$notify.error({
-            title: '登录失败',
-            message: '请重试'
-          });
+          self.$notify.error({ title: '登录失败', message: '请重试' });
+        }).finally(function(){
+          self.isLoginning = false;
         });
       });
     }

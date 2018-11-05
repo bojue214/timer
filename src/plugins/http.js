@@ -64,7 +64,7 @@ const http = function (options) {
             for(let k in options.header) { opts.header[k] = options.header[k]; }
             
             if(!opts.header['Content-Type']) { opts.header['Content-Type'] = 'application/json'; }
-
+            
             if(opts.token === true) {
                 
             } else {
