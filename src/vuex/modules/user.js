@@ -75,8 +75,8 @@ const user = {
                     },
                     token: false,
                 }).then(function(res){
-                    if(res && res.data && res.data){
-                        context.commit('SET_USER', res.data.data);
+                    if(res && res.data){
+                        context.commit('SET_USER', res.data);
                         resolve();
                     }
                 }).catch(reject);

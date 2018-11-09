@@ -6,7 +6,9 @@ const config = {
         mysql:{}
     },
     token:{
-        expire: 1 * 60 * 1000
+        expire: 1 * 60 * 1000,
+        safe: ['/login', '/api/user/login'],
+        key:'X-Timer-Token'
     }
 };
 

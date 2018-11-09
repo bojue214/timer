@@ -68,7 +68,7 @@ const http = function (options) {
             if(opts.token === true) {
                 
             } else {
-                delete opts.header['TIMER-TOKEN'];
+                delete opts.header['X-Timer-Token'];
             }
 
             for(let v in opts.header) {

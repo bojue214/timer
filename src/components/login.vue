@@ -27,7 +27,7 @@
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click="login('loginForm')" v-loading.fullscreen.lock="isLoginning">{{$t('Login')}}</el-button>
+            <el-button type="success" @click="login('loginForm')" v-loading.fullscreen.lock="isLoginning">{{$t('Login')}}dsadsadas</el-button>
           </el-form-item>
         </el-form>
       </el-col>

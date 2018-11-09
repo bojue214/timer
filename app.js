@@ -8,11 +8,11 @@ const bodyParser = require('body-parser');
 // import config
 const config = require('./server/config');
 const router = require( './server/router');
-const token = require('./server/token');
+const tokens = require('./server/token');
 
 const app = express();
 
-app.set('views',__dirname + '/dist');
+app.set('views', __dirname + '/dist');
 app.set('view engine', 'html');
 
 app.use(express.static(__dirname + '/dist'));
@@ -22,34 +22,33 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.all('*', function(request, response, next) {
-    response.header("Access-Control-Allow-Origin", "*");
-    response.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,TIMER-TOKEN");
-    response.header("Access-Control-Allow-Methods","*");
-    response.header("X-Powered-By",' 3.2.1')
-    response.header("Content-Type", "application/json;charset=utf-8");
-    next();
-    /*
-    if(request.header['TIMER-TOKEN']){
-        if(token.check(request.header['TIMER-TOKEN'])){
-            token.update(request.header['TIMER-TOKEN']);
+// root token verify
+app.all('*', function(req, res, next) {
+    console.log('token verify', req.url);
+    if(config.token.safe.indexOf(req.url) === -1){
+        console.log('token verify::[[['+req.url, ']]] need to verify');
+        let token = req.body.token || req.query.token || req.headers[config.token.key] || req.cookies[config.token.key];
+        let ret = tokens.verify(token);
+        if( ret > 0 ){
+            tokens.update(token);
             next();
         } else {
-            token.delete(request.header['TIMER-TOKEN']);
-            response.redirect(302, '/');
+            res.header("Content-Type", "text/html");
+            return res.redirect('back');
         }
     }
-    */
+    next();
+});
 
-
-    console.log('11111', request.url);
-    /*
-    if(true){    
-        next();
-    } else{
-        
-    }
-    */
+// root url router
+app.all('*', function(req, res, next) {
+    console.log('router::::::header');
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type" + ',' + config.token.key);
+    res.header("Access-Control-Allow-Methods","*");
+    res.header("X-Powered-By",' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
+    next();
 });
 
 // load route
