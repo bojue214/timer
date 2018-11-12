@@ -1,10 +1,9 @@
 const express = require('express');
-const controller = require('../controller/user');
+const user = require('../controller/user');
 const router = express.Router();
 
 router.post('/login', function(req, res){
-    let user = controller.login(req.body.account,req.body.password );
-    res.send(user);
+    res.send(user.login(req.body.account, req.body.password));
 });
 
 

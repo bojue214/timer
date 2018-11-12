@@ -1,14 +1,13 @@
 const express = require('express');
-
 const user = require('./route/user');
+
 module.exports = function(app){
 
     const router = express.Router();
 
-    router.get(['/', '/login'], function(req, res){
-        console.log('base url', req.url);
+    router.get('/login', function(req, res){
         res.header("Content-Type", "text/html");
-        res.redirect('back');
+        res.redirect('/');
     });
 
     app.use(router);

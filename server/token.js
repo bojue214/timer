@@ -1,37 +1,71 @@
 const config = require('./config');
 
 const tokens = {};
+const mapping = {};
 
 const operation = {
 
+    /** create
+     * create a token info by an account
+     * @param {string} account 
+     */
     create(account){
-        console.log('token:create:' + account);
+        //console.log('token:create:' + account);
         const time = new Date().getTime();
-        const token = 'token:'+ Math.round( Math.random(10000) ) + time;
-        tokens[token] = {
+        const token = 'token:'+ Math.round( Math.random()*1000000 ) + time;
+        mapping[account] = {
             token: token,
             account: account,
             createTime: time,
             updateTime: time,
             expireTime: time + config.token.expire
         };
-        console.log('token:created:' + account + ':' + token);
-        return tokens[token];
+        tokens[token] = mapping[account];
+        //console.log('token:created:' + account + ':' + token);
+        return JSON.parse( JSON.stringify(tokens[token]) );
     },
 
-    get(token){ return tokens[token]; },
+    /** get
+     * get a token info by an account or a token string.
+     * @param {string} key 
+     */
+    get(key){ return key.length > 20 ? tokens[key] : mapping[key]; },
 
-    delete(token){ delete tokens[token]; },
+    delete(key){
+        if( key.length > 20 ){
+            delete mapping[tokens[key].account];
+            delete tokens[key];
+        } else {
+            delete tokens[mapping[key].token];
+            delete mapping[key];
+        } 
+    },
 
-    update(token){
+    /** update
+     * reflesh a token info(update its expireTime)
+     * @param {string} key 
+     */
+    update(key){
+        let ref = key.length > 20 ? tokens[key] : mapping[key];
         const time = new Date().getTime();
-        if( tokens[token] ){
-            tokens[token].updateTime = time;
-            tokens[token].expireTime = time + config.token.expire;
-        }
-        return tokens[token];
+        ref.updateTime = time;
+        ref.expireTime = time + config.token.expire;
+        return JSON.parse( JSON.stringify(ref) );
     },
 
+    /** expire
+     * make a token expired
+     * @param {string} token 
+     */
+    expire(token){
+        tokens[token].expireTime = new Date().getTime();
+        return JSON.parse( JSON.stringify(tokens[token]) );
+    },
+
+    /** verify
+     * check a token which is valid. 1: vaild token, 0: not exist, -1: expired
+     * @param {string} token 
+     */
     verify(token){
         if( !operation.checkIsExist(token) ){
             return 0;
@@ -42,21 +76,20 @@ const operation = {
         return 1;
     },
 
+    /** checkIsExpire
+     * check a token which is expired.
+     * @param {string} token 
+     */
     checkIsExpire(token){
-        return tokens[token].expireTime >= new Date().getTime();
+        return tokens[token].expireTime <= new Date().getTime();
     },
 
+    /** checkIsExist
+     * check a token which is exist.
+     * @param {string} token 
+     */
     checkIsExist(token){
         return tokens[token] ? true : false;
-    },
-
-    getTokenByAccount(account){
-        for(let key in tokens){
-            if(tokens[key].account == account){
-                return tokens[key];
-            }
-        }
-        return null;
     }
 };
 

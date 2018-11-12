@@ -34,7 +34,7 @@ app.all('*', function(req, res, next) {
             next();
         } else {
             res.header("Content-Type", "text/html");
-            return res.redirect('back');
+            return res.redirect('/');
         }
     }
     next();
