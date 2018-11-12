@@ -25,7 +25,7 @@ app.use(cookieParser());
 // root token verify
 app.all('*', function(req, res, next) {
     console.log('token verify', req.url);
-    if(config.token.safe.indexOf(req.url) === -1){
+    if(config.token.safe.indexOf(req.url) === -1 && req.url.slice(0, 7) !== '/static'){
         console.log('token verify::[[['+req.url, ']]] need to verify');
         let token = req.body.token || req.query.token || req.headers[config.token.key] || req.cookies[config.token.key];
         let ret = tokens.verify(token);
