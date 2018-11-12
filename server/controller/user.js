@@ -1,5 +1,5 @@
 const userQuery = require('../action/query/user');
-const response = require('../response');
+const res = require('../response');
 const tokens = require('../token');
 
 module.exports = {
@@ -12,12 +12,12 @@ module.exports = {
                 } else {
                     user.token = tokens.create(user.account);
                 }
-                return response.format('LOGIN_SUCCESS', user);
+                return res.format('LOGIN_SUCCESS', user);
             } else {
-                return response.format('PASSWORD_ERROR', null);
+                return res.format('PASSWORD_ERROR', null);
             }
         } else {
-            return response.format('ACCOUNT_NULL', null);
+            return res.format('ACCOUNT_NULL', null);
         }
     }
 };

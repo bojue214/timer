@@ -78,6 +78,8 @@ const user = {
                     if(res && res.data){
                         context.commit('SET_USER', res.data);
                         resolve();
+                    } else {
+                        reject(res);
                     }
                 }).catch(reject);
             });

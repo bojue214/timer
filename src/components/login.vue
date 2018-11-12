@@ -27,7 +27,7 @@
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click="login('loginForm')" v-loading.fullscreen.lock="isLoginning">{{$t('Login')}}dsadsadas</el-button>
+            <el-button type="success" @click="login('loginForm')" v-loading.fullscreen.lock="isLoginning">{{$t('Login')}}</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -54,15 +54,7 @@ export default {
       isLoginning: false
     };
   },
-  mounted(){
-    // register a listener to get the user mutation info.
-    //this.$store.subscribe(this.logged);
-  },
   methods: {
-    // when SET_USER is excued, the user info is got successfully.
-    logged(mutation, state){
-      mutation.type === 'SET_USER' && this.$router.push('home');
-    },
 
     toggle(){ this.showPass = !this.showPass; },
 
@@ -72,15 +64,15 @@ export default {
     },
 
     login( formName ){
-      let self = this;
+      let that = this;
       this.isLoginning = true;
-      self.$refs[formName].validate((valid) => {
-        valid && self.$store.dispatch('ACTION_USER_LOGIN', self.user).then(function(res){
-          self.$notify.success({ title: '登录成功', message: '页面跳转中......' });
+      that.$refs[formName].validate((valid) => {
+        valid && that.$store.dispatch('ACTION_USER_LOGIN', that.user).then(function(res){
+          that.$notify.success({ title: '登录成功', message: '页面跳转中......' });
         }).catch(function(error){
-          self.$notify.error({ title: '登录失败', message: '请重试' });
+          that.$notify.error({ title: '登录失败', message: '请重试' });
         }).finally(function(){
-          self.isLoginning = false;
+          that.isLoginning = false;
         });
       });
     }

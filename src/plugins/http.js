@@ -39,12 +39,19 @@ const http = function (options) {
 
                 if(status >= 200 && status < 400) {
                     try {
-                        data = JSON.parse( data );
+                        data = JSON.parse(data);
+                        if(data 
+                            && data.data !== undefined 
+                            && data.status !== undefined 
+                            && data.message !== undefined){
+                            resolve(data);
+                        } else {
+                            reject(response);
+                        }
                     } catch(e) {
+                        reject(response);
                         console.log( opts.url, "response can't be parsed to JSON format." );
                     }
-                    resolve({data, response, xhr});
-                    return;
                 } else {
                     reject(response);
                     console.error(status, opts.url, data, response);
