@@ -68,7 +68,11 @@ export default {
             that.isLoading = true;
             that.$refs[formName].validate((valid) => {
                 valid && that.$store.dispatch('ACTION_USER_LOGIN', that.user).then(function(res){
-                    that.$notify.success({ title: '登录成功', message: '页面跳转中......' });
+                    that.$message({ message: h('p', null, [
+                        h('span', null, that.$i18.t('welcome')),
+                        h('span', null, res.nick),
+                        h('span', null, that.$i18.t('redirect'))
+                    ]), type: 'success' });
                 }).catch(function(error){
                     that.$notify.error({ title: '登录失败', message: '请重试' });
                 }).finally(function(){

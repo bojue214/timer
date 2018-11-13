@@ -75,12 +75,8 @@ const user = {
                     },
                     token: false,
                 }).then(function(res){
-                    if(res && res.data){
-                        context.commit('SET_USER', res.data);
-                        resolve();
-                    } else {
-                        reject(res);
-                    }
+                    if(res && res.data){ context.commit('SET_USER', res.data); resolve(res);
+                    } else { reject(res); }
                 }).catch(reject);
             });
         },

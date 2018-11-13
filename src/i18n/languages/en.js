@@ -8,6 +8,8 @@ const en = {
     Login: 'Login',
     login: 'login',
     select_language: 'Language',
+    welcome: 'Welcome, ',
+    redirect: 'redirecting...',
     $vali:{
         noAccount: 'Please input your account.',
         noPassword: 'Please input your password.',

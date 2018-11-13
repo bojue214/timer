@@ -8,6 +8,8 @@ const zh = {
     Login: '登录',
     login: '登录',
     select_language: '语言偏好',
+    welcome: '欢迎回来！',
+    redirect: '跳转中...',
     $vali:{ 
         noAccount: '请输入账号',
         noPassword: '请输入密码',
