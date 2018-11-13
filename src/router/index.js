@@ -1,9 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-import login from '@/components/login'
-import language from '@/components/language'
-import home from '@/components/home'
+import login from '@/components/login';
+import language from '@/components/language';
+import forget from '@/components/forget';
+import home from '@/components/home';
 
 Vue.use(Router);
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/language',
       name: 'language',
       component: language,
+    },
+    {
+        path: '/forget',
+        name: 'forget',
+        component: forget,
     },
     {
       path: '/home',
