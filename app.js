@@ -42,7 +42,6 @@ app.all('*', function(req, res, next) {
 
 // root url router
 app.all('*', function(req, res, next) {
-    console.log('router::::::header');
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type" + ',' + config.token.key);
     res.header("Access-Control-Allow-Methods","*");
