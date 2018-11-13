@@ -67,15 +67,17 @@ export default {
 
         login( formName ){
             let that = this;
+            let h = this.$createElement;
+
             that.isLoading = true;
             that.$refs[formName].validate((valid) => {
                 valid && that.$store.dispatch('ACTION_USER_LOGIN', that.user).then(function(res){
                     // 0 account null, 1 password error, 2 login
                     if( res.status == '2'){
                         that.$message({ 
-                            message: that.$createElement('p', null, [ that.$createElement('span', null, that.$i18n.t('Welcome')), 
-                                that.$createElement('span', {style:'color: teal'}, res.data.nick), 
-                                that.$createElement('span', null, ' '+ that.$i18n.t('redirect'))
+                            message: h('p', null, [ h('span', null, that.$i18n.t('Welcome')), 
+                                h('span', {style:'color: teal'}, res.data.nick), 
+                                h('span', null, ' '+ that.$i18n.t('redirect'))
                             ]), type: 'success' 
                         });
                         that.$router.push('home');
