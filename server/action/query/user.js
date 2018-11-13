@@ -6,7 +6,8 @@ module.exports ={
                 password: '2',
                 name: 'admin',
                 nick:'3333333',
-                birthday:'910714'
+                birthday:'910714',
+                help_number:'123456'
             };
         } else{
             return null;

@@ -27,7 +27,7 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="success" @click="login('loginForm')" v-loading.fullscreen.lock="isLoading">{{$t('Login')}}</el-button>
+                    <el-button type="success" :disabled="isLoading" @click="login('loginForm')" v-loading.fullscreen.lock="isLoading">{{$t('Login')}}</el-button>
                 </el-form-item>
                 </el-form>
             </el-col>
@@ -68,13 +68,19 @@ export default {
             that.isLoading = true;
             that.$refs[formName].validate((valid) => {
                 valid && that.$store.dispatch('ACTION_USER_LOGIN', that.user).then(function(res){
-                    that.$message({ message: h('p', null, [
-                        h('span', null, that.$i18.t('welcome')),
-                        h('span', null, res.nick),
-                        h('span', null, that.$i18.t('redirect'))
-                    ]), type: 'success' });
-                }).catch(function(error){
-                    that.$notify.error({ title: '登录失败', message: '请重试' });
+                    // 0 account null, 1 password error, 2 login
+                    if( res.status == '2'){
+                        that.$message({ 
+                            message: that.$createElement('p', null, [ that.$createElement('span', null, that.$i18n.t('welcome')), 
+                                that.$createElement('span', {style:'color: teal'}, res.data.nick), 
+                                that.$createElement('span', null, ' '+ that.$i18n.t('redirect'))
+                            ]), type: 'success' 
+                        });
+                    } else {
+                        that.$message.warning(that.$i18n.t('message.' +res.message));
+                    }
+                }).catch(function(res){
+                    that.$message.error(that.$i18n.t('message.' + res.message));
                 }).finally(function(){
                     that.isLoading = false;
                 });
