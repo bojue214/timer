@@ -73,7 +73,7 @@ export default {
                     // 0 account null, 1 password error, 2 login
                     if( res.status == '2'){
                         that.$message({ 
-                            message: that.$createElement('p', null, [ that.$createElement('span', null, that.$i18n.t('welcome')), 
+                            message: that.$createElement('p', null, [ that.$createElement('span', null, that.$i18n.t('Welcome')), 
                                 that.$createElement('span', {style:'color: teal'}, res.data.nick), 
                                 that.$createElement('span', null, ' '+ that.$i18n.t('redirect'))
                             ]), type: 'success' 
