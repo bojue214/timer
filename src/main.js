@@ -12,7 +12,7 @@ import i18n from './i18n/i18n'
 import validator from './plugins/validator';
 import storage from './plugins/storage';
 import timeout from './plugins/timeout';
-import xhr from './plugins/xhr';
+import http from './plugins/http';
 
 import App from './App';
 
@@ -23,7 +23,7 @@ Vue.use(ElementUI);
 Vue.use(validator);
 Vue.use(storage);
 Vue.use(timeout);
-Vue.use(xhr);
+Vue.use(http);
 
 /* eslint-disable no-new */
 new Vue({

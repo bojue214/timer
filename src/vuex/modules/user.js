@@ -1,6 +1,6 @@
 import map from '../map';
 import i18n from '../../i18n/i18n';
-import xhr from '../../plugins/xhr';
+import http from '../../plugins/http';
 
 const user = {
     state:{
@@ -56,24 +56,29 @@ const user = {
             context.commit('SET_USER_LANGUAGE', language);
         },
         
-        /** ACTION_USER
+        [map['user']['ACTION_USER']](context, user){
+            context.commit('SET_USER', user);
+        },
+
+        /** ACTION_USER_LOGIN
          * get target user's infomations and set its information into vuex store
          * @param {store} context 
          * @param {object} user 
          */
-        async [map['user']['ACTION_USER']](context, user){
-            let res = await xhr({
-                api: '/user',
-                data: {
-                    account: user.account,
-                    password: user.password
-                },
-                token: false
+        async [map['user']['ACTION_USER_LOGIN']](context, user){
+            return new Promise((resolve, reject) => {
+                http({
+                    api: '/user/login',
+                    data: {
+                        account: user.account,
+                        password: user.password
+                    },
+                    token: false,
+                }).then(function(res){
+                    res && res.data && context.commit('SET_USER', res.data);
+                    resolve(res);
+                }).catch(reject);
             });
-
-            if(res && res.data && res.data){
-                context.commit('SET_USER', res.data.data);
-            }
         },
     },
 

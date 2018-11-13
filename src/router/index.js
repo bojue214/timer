@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import login from '@/components/login'
 import language from '@/components/language'
+import home from '@/components/home'
 
 Vue.use(Router);
 
@@ -21,6 +22,11 @@ export default new Router({
       path: '/language',
       name: 'language',
       component: language,
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: home,
     },
   ]
 });
