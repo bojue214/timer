@@ -14,6 +14,7 @@ const en = {
     select_language: 'Language',
     welcome: 'Welcome, ',
     redirect: 'redirecting...',
+    Forget:'Forget...',
     $vali:{
         noAccount: 'Please input your account.',
         noPassword: 'Please input your password.',

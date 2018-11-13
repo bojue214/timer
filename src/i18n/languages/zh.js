@@ -14,6 +14,7 @@ const zh = {
     select_language: '语言偏好',
     welcome: '欢迎回来！',
     redirect: '跳转中...',
+    Forget: '忘记密码...',
     $vali:{ 
         noAccount: '请输入账户名',
         noPassword: '请输入密码',
