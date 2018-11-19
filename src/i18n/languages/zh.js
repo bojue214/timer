@@ -28,7 +28,8 @@ const zh = {
         phone: '手机号码格式不对',
         noReptPassword: '请输入确认密码',
         helpNumber: '救援码为六位字符或数字组成',
-        twoPass: '两次输入的密码不一致',
+        twoPassword: '两次输入的密码不一致',
+        password: '密码由六到二十位数字或者字母组成',
     },
     message: { 
         ACCOUNT_NULL: '账户名不存在',

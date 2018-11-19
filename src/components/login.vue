@@ -11,13 +11,13 @@
                 
                 <el-form-item prop="account">
                     <el-input v-model="user.account" :placeholder="$t('account')">
-                    <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('account', 'loginForm')"></i>
+                        <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('account', 'loginForm')"></i>
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="password" v-if='!hasShow'>
                     <el-input type="password" v-model="user.password" autocomplete="off" :placeholder="$t('password')">
-                    <i slot="suffix" class="el-input__icon el-icon-view" v-on:click.stop="toggle"></i>
-                    <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('password', 'loginForm')"></i>
+                        <i slot="suffix" class="el-input__icon el-icon-view" v-on:click.stop="toggle"></i>
+                        <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('password', 'loginForm')"></i>
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="password" v-if='hasShow'>
