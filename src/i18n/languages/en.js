@@ -28,7 +28,8 @@ const en = {
         phone: "It's not a correct phone number",
         noReptPassword: 'Please repeat your password.',
         helpNumber: 'Help number must be six charactor.',
-        twoPass: 'The two passwords you typed do not match.',
+        twoPassword: 'The two passwords you typed do not match.',
+        password: 'A password need several charactors from six to twenty.',
     },
     message:{
         ACCOUNT_NULL: 'Account not exist',
