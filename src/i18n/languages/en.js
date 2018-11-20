@@ -30,6 +30,7 @@ const en = {
         helpNumber: 'Help number must be six charactor.',
         twoPassword: 'The two passwords you typed do not match.',
         password: 'A password need several charactors from six to twenty.',
+        account:'An account need several charactors from eight to sixteen.',
     },
     message:{
         ACCOUNT_NULL: 'Account not exist',

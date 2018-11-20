@@ -30,6 +30,7 @@ const zh = {
         helpNumber: '救援码为六位字符或数字组成',
         twoPassword: '两次输入的密码不一致',
         password: '密码由六到二十位数字或者字母组成',
+        account:'账户名由八到十六位数字或者字母组成',
     },
     message: { 
         ACCOUNT_NULL: '账户名不存在',

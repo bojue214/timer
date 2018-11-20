@@ -8,34 +8,48 @@
         <el-row>
             <el-col :xs="{span:20, offset:2}" :sm="{span:14, offset:5}" :md="{span:8, offset:8}" :lg="{span:6, offset:9}" :xl="{span:6, offset:9}">
                 <el-form :model="helpWay" status-icon :rules="helpRules" ref="helpForm">
-                    <el-form-item prop="helpNumber">
-                        <el-input v-model="helpWay.helpNumber" autocomplete="off" :placeholder="$t('help_number')">
+                    
+                    <el-form-item prop="account">
+                        <el-input v-model="helpWay.account" autocomplete="off" :placeholder="$t('account')">
+                            <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('account', 'helpForm')"></i>
+                        </el-input>
+                    </el-form-item>
+                    
+                    <el-form-item prop="helpNumber" v-if='!isShowHelpNumber'>
+                        <el-input type="password" v-model="helpWay.helpNumber" autocomplete="off" :placeholder="$t('help_number')">
+                            <i slot="suffix" class="el-input__icon el-icon-view" v-on:click.stop="toggle('isShowHelpNumber')"></i>
+                            <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('helpNumber', 'helpForm')"></i>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item prop="helpNumber" v-if='isShowHelpNumber'>
+                        <el-input v-model="helpWay.helpNumber" autocomplete="off"  :placeholder="$t('help_number')">
+                            <i slot="suffix" class="el-input__icon el-icon-more" v-on:click.stop="toggle('isShowHelpNumber')"></i>
                             <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('helpNumber', 'helpForm')"></i>
                         </el-input>
                     </el-form-item>
 
-                    <el-form-item prop="password" v-if='!hasShow'>
+                    <el-form-item prop="password" v-if='!isShowPassword'>
                         <el-input type="password" v-model="helpWay.password" autocomplete="off" :placeholder="$t('password')">
-                            <i slot="suffix" class="el-input__icon el-icon-view" v-on:click.stop="toggle"></i>
+                            <i slot="suffix" class="el-input__icon el-icon-view" v-on:click.stop="toggle('isShowPassword')"></i>
                             <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('password', 'helpForm')"></i>
                         </el-input>
                     </el-form-item>
-                    <el-form-item prop="password" v-if='hasShow'>
+                    <el-form-item prop="password" v-if='isShowPassword'>
                         <el-input v-model="helpWay.password" autocomplete="off"  :placeholder="$t('password')">
-                            <i slot="suffix" class="el-input__icon el-icon-more" v-on:click.stop="toggle"></i>
+                            <i slot="suffix" class="el-input__icon el-icon-more" v-on:click.stop="toggle('isShowPassword')"></i>
                             <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('password', 'helpForm')"></i>
                         </el-input>
                     </el-form-item>
 
-                    <el-form-item prop="reptPassword" v-if='!hasShow'>
+                    <el-form-item prop="reptPassword" v-if='!isShowPassword'>
                         <el-input type="password" v-model="helpWay.reptPassword" autocomplete="off" :placeholder="$t('rep_password')">
-                            <i slot="suffix" class="el-input__icon el-icon-view" v-on:click.stop="toggle"></i>
+                            <i slot="suffix" class="el-input__icon el-icon-view" v-on:click.stop="toggle('isShowPassword')"></i>
                             <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('reptPassword', 'helpForm')"></i>
                         </el-input>
                     </el-form-item>
-                    <el-form-item prop="reptPassword" v-if='hasShow'>
+                    <el-form-item prop="reptPassword" v-if='isShowPassword'>
                         <el-input v-model="helpWay.reptPassword" autocomplete="off"  :placeholder="$t('rep_password')">
-                            <i slot="suffix" class="el-input__icon el-icon-more" v-on:click.stop="toggle"></i>
+                            <i slot="suffix" class="el-input__icon el-icon-more" v-on:click.stop="toggle('isShowPassword')"></i>
                             <i slot="suffix" class="el-input__icon el-icon-delete" v-on:click.stop="clear('reptPassword', 'helpForm')"></i>
                         </el-input>
                     </el-form-item>
@@ -44,6 +58,7 @@
                         <el-button @click="submit" type="primary">{{$t('Submit')}}</el-button>
                         <el-button @click="reset('helpForm')">{{$t('Reset')}}</el-button>
                     </el-form-item>
+
                 </el-form>
             </el-col>
         </el-row>
@@ -57,13 +72,19 @@ export default {
     components:{ language },
     data() {
         return {
-            hasShow: false,
+            isShowHelpNumber: false,
+            isShowPassword: false,
             helpWay:{
+                account: '',
                 helpNumber:'',
                 password:'',
                 reptPassword: '',
             },
-            helpRules: {    
+            helpRules: {
+                account: [
+                    { required: true, validator: this.$vali('notEmpty', '$vali.noAccount'), trigger: 'blur' },
+                    { validator: this.$vali('account', '$vali.account'), trigger: 'blur' }
+                ],
                 helpNumber:[
                     { required: true, validator: this.$vali('notEmpty', '$vali.noHelpNumber'), trigger: 'blur' },
                     { validator: this.$vali('helpNumber', '$vali.helpNumber'), trigger: 'blur' }
@@ -83,7 +104,7 @@ export default {
     },
 
     methods: {
-        toggle(){ this.hasShow = !this.hasShow; },
+        toggle(key){ this[key] = !this[key]; },
         reset( formName ){
             this.$refs[formName].resetFields();
         },
@@ -92,7 +113,7 @@ export default {
             this.$refs[formName].clearValidate([key]);
         },
         submit(){
-            
+
         }
     }
 };

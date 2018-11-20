@@ -8,6 +8,7 @@ const REGEX = {
     notEmpty: /\r|\n|\\s/g,
     helpNumber: /^[A-Za-z0-9]{6}$/,
     password: /^[A-Za-z0-9]{6,20}$/,
+    account: /^[A-Za-z0-9]{8,16}$/,
 };
 
 const getValue = function(context, chains){
@@ -27,7 +28,8 @@ const CHECK = {
     notEmpty(val){ return val.replace(REGEX.empty, '') !== ''; },
     helpNumber(val){ return REGEX['helpNumber'].test(val); },
     equal(val, context, property){ return val === getValue(context, property); },
-    password(val){ return REGEX['password'].test(val); }
+    password(val){ return REGEX['password'].test(val); },
+    account(val){ return REGEX['account'].test(val); },
 };
 
 /** validator
